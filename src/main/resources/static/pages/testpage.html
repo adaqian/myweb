@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:substituteby="profile :: head('test page')">
+</head>
+<body class="hold-transition skin-blue layout-top-nav">
+ <div class="wrapper">
+ 	<div th:substituteby="profile :: header"></div>
+ 	<div class="content-wrapper">
+	 	<div class="container" style="min-height:700px">123
+	 	</div>
+ 	</div>
+ 	<div th:substituteby="profile :: footer"></div>
+ </div>
+</body>
+</html>

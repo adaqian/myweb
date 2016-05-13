@@ -27,4 +27,9 @@ public class GreetingController {
         return new Greeting(counter.incrementAndGet(),
                             String.format(template, name));
     }
+    
+    @RequestMapping("/testpage")
+    public String testpage(@RequestParam(value="name", defaultValue="World") String name) {
+        return "testpage";
+    }
 }
