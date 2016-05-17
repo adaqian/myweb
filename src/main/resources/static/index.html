@@ -4,15 +4,24 @@
     <title>Hello WebSocket</title>
     <script src="lib/sockjs-0.3.4.js"></script>
     <script src="lib/stomp.js"></script>
+    <script src="lib/jQuery-2.2.0.min.js"></script>
     <script type="text/javascript">
         var stompClient = null;
         var coordinationId=1;
         
+        $(function(){
+        	disconnect();
+        });
+        
         function setConnected(connected) {
-            document.getElementById('connect').disabled = connected;
-            document.getElementById('disconnect').disabled = !connected;
-            document.getElementById('conversationDiv').style.visibility = connected ? 'visible' : 'hidden';
-            document.getElementById('response').innerHTML = '';
+            $("#connect").attr("disabled",connected);
+            $("#disconnect").attr("disabled",!connected);
+            if(connected){
+            	$("#conversationDiv").show();
+            }else{
+            	$("#conversationDiv").hide();
+            }
+            $("#response").html("");
         }
 
         function connect() {
@@ -24,8 +33,11 @@
                 /* stompClient.subscribe('/topic/greetings', function(greeting){
                     showGreeting(JSON.parse(greeting.body).content);
                 }); */
-                stompClient.subscribe('/web/chat' + coordinationId, function(chat){
-                    showChat(JSON.parse(chat.body));
+                stompClient.subscribe('/web/notice', function(msg){
+                	showNotice(msg.body);
+                });
+                stompClient.subscribe('/web/chat' + coordinationId, function(msg){
+                    showChat(JSON.parse(msg.body));
                 });
             });
         }
@@ -53,16 +65,16 @@
         
       	//发送聊天信息
         function sendMessage() {
-          var inputValue = document.getElementById('chat_input').value;
-          var name = document.getElementById('name').value;
+          var inputValue = $('#chat_input').val();
+          var name = $('#name').val();
           
           stompClient.send("/app/userChat", {}, JSON.stringify({
             'name': encodeURIComponent(name),
             'chatContent': encodeURIComponent(inputValue),
             'coordinationId': coordinationId
-          }));
+          })); 
         }
-      	
+
       	//显示聊天信息
         function showChat(message) {
             var text = decodeURIComponent(message.name) + ':' + decodeURIComponent(message.chatContent) + '\n';
@@ -72,9 +84,18 @@
             p.appendChild(document.createTextNode(text));
             response.appendChild(p);
         }
+      	
+      	function sendNotice(){
+      		var inputValue = $('#notice').val();
+            stompClient.send("/app/publicNotic", {}, inputValue);
+      	}
+      	
+		function showNotice(message){
+            $("#notice_content").text(message);
+      	}
     </script>
 </head>
-<body onload="disconnect()">
+<body>
 <noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being enabled. Please enable
     Javascript and reload this page!</h2></noscript>
 <div>
@@ -83,6 +104,9 @@
         <button id="disconnect" disabled="disabled" onclick="disconnect();">Disconnect</button>
     </div>
     <div id="conversationDiv">
+        <label>send notice?</label><input type="text" id="notice" />
+        <button id="sendNotice" onclick="sendNotice();">Send</button>
+        <p id="notice_content"></p>
         <label>What is your name?</label><input type="text" id="name" />
         <!-- <button id="sendName" onclick="sendName();">Send</button> -->
         <p id="response"></p>

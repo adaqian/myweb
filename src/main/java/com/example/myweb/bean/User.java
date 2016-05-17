@@ -2,8 +2,17 @@ package com.example.myweb.bean;
 
 public class User {
 
+	private long id;
 	private String username;
 	private String password;
+	
+	
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
 	public String getUsername() {
 		return username;
 	}
@@ -15,6 +24,21 @@ public class User {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public User(){
+		
+	}
+	
+	public User(long id,String username,String password){
+		this.id=id;
+		this.username=username;
+		this.password=password;
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("User[id=%d,username=%s]", id,username);
 	}
 	
 }

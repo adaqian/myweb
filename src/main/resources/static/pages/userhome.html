@@ -31,7 +31,7 @@
             <div class="box-body box-profile">
               <img class="profile-user-img img-responsive img-circle" src="../img/user4-128x128.jpg" alt="User profile picture"/>
 
-              <h3 class="profile-username text-center" th:text="${username}">Nina Mcintire</h3>
+              <h3 class="profile-username text-center" th:text="${username}" id="username">Nina Mcintire</h3>
 
               <p class="text-muted text-center">Software Engineer</p>
 
@@ -47,12 +47,129 @@
                 </li>
               </ul>
 
-              <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+              <a href="#" class="btn btn-primary btn-block"><b>Chat</b></a>
             </div>
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
 
+	      <!-- chat -->
+		  <div class="box box-primary direct-chat direct-chat-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Direct Chat</h3>
+
+              <div class="box-tools pull-right">
+                <span data-toggle="tooltip" title="3 New Messages" class="badge bg-light-blue">3</span>
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Contacts" data-widget="chat-pane-toggle">
+                  <i class="fa fa-comments"></i></button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <!-- Conversations are loaded here -->
+              <div class="direct-chat-messages" id="chat_content">
+                
+              </div>
+              <!--/.direct-chat-messages-->
+
+              <!-- Contacts are loaded here -->
+              <div class="direct-chat-contacts">
+                <ul class="contacts-list">
+                  <li>
+                    <a href="#">
+                      <img class="contacts-list-img" src="../img/user1-128x128.jpg" alt="User Image"/>
+
+                      <div class="contacts-list-info">
+                            <span class="contacts-list-name">
+                              Count Dracula
+                              <small class="contacts-list-date pull-right">2/28/2015</small>
+                            </span>
+                        <span class="contacts-list-msg">How have you been? I was...</span>
+                      </div>
+                      <!-- /.contacts-list-info -->
+                    </a>
+                  </li>
+                  <!-- End Contact Item -->
+                  <li>
+                    <a href="#">
+                      <img class="contacts-list-img" src="../img/user1-128x128.jpg" alt="User Image"/>
+
+                      <div class="contacts-list-info">
+                            <span class="contacts-list-name">
+                              Count Dracula
+                              <small class="contacts-list-date pull-right">2/28/2015</small>
+                            </span>
+                        <span class="contacts-list-msg">How have you been? I was...</span>
+                      </div>
+                      <!-- /.contacts-list-info -->
+                    </a>
+                  </li>
+                  <!-- End Contact Item -->
+                  <li>
+                    <a href="#">
+                      <img class="contacts-list-img" src="../img/user1-128x128.jpg" alt="User Image"/>
+
+                      <div class="contacts-list-info">
+                            <span class="contacts-list-name">
+                              Count Dracula
+                              <small class="contacts-list-date pull-right">2/28/2015</small>
+                            </span>
+                        <span class="contacts-list-msg">How have you been? I was...</span>
+                      </div>
+                      <!-- /.contacts-list-info -->
+                    </a>
+                  </li>
+                  <!-- End Contact Item -->
+                  <li>
+                    <a href="#">
+                      <img class="contacts-list-img" src="../img/user1-128x128.jpg" alt="User Image"/>
+
+                      <div class="contacts-list-info">
+                            <span class="contacts-list-name">
+                              Count Dracula
+                              <small class="contacts-list-date pull-right">2/28/2015</small>
+                            </span>
+                        <span class="contacts-list-msg">How have you been? I was...</span>
+                      </div>
+                      <!-- /.contacts-list-info -->
+                    </a>
+                  </li>
+                  <!-- End Contact Item -->
+                  <li>
+                    <a href="#">
+                      <img class="contacts-list-img" src="../img/user1-128x128.jpg" alt="User Image"/>
+
+                      <div class="contacts-list-info">
+                            <span class="contacts-list-name">
+                              Count Dracula
+                              <small class="contacts-list-date pull-right">2/28/2015</small>
+                            </span>
+                        <span class="contacts-list-msg">How have you been? I was...</span>
+                      </div>
+                      <!-- /.contacts-list-info -->
+                    </a>
+                  </li>
+                  <!-- End Contact Item -->
+                </ul>
+                <!-- /.contatcts-list -->
+              </div>
+              <!-- /.direct-chat-pane -->
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <div class="input-group">
+                  <input type="text" name="message" id="chat_input" placeholder="Type Message ..." class="form-control"/>
+                      <span class="input-group-btn">
+                        <button class="btn btn-primary btn-flat" onclick="sendMessage()">Send</button>
+                      </span>
+                </div>
+            </div>
+            <!-- /.box-footer-->
+          </div>
+          <!--/.direct-chat -->
         </div>
         <!-- /.col -->
         <div class="col-md-9">
@@ -298,5 +415,13 @@
 </div>
 <!-- ./wrapper -->
 
+<!-- web chat -->
+<script src="../lib/sockjs-0.3.4.js"></script>
+<script src="../lib/stomp.js"></script>
+<script src="../lib/chat.js"></script>
+<script>
+  
+	
+</script>
 </body>
 </html>

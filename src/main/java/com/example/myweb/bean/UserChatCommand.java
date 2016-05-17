@@ -4,8 +4,17 @@ public class UserChatCommand {
 	private String name;
 	  private String chatContent;
 	  private String coordinationId;
+	  private String sendTime;
 
-	  public String getName() {
+	  public String getSendTime() {
+		return sendTime;
+	}
+
+	public void setSendTime(String sendTime) {
+		this.sendTime = sendTime;
+	}
+
+	public String getName() {
 	    return name;
 	  }
 

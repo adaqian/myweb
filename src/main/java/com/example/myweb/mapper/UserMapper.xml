@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.myweb.mapper.UserMapper">
+
+    <select id="getUserInfo" parameterType="map" resultType="map">
+		select a.user_no,a.user_nickname,a.actual_cost_cash_sum,a.user_email,a.user_mobile,a.user_name,a.user_job_no,a.user_password,a.is_active,a.user_role,a.status,a.is_enable,
+		a.is_hide_email,a.is_hide_mobile,b.imgid,b.fans,b.attentions,b.ptcount,b.att_verify,b.signature,a.create_time,c.ancestors_area_no,a.id_card_no,a.is_male,s.score_balance
+		from um_user_info a
+		left join tech_sys_user b on cast(a.user_no as char)=b.Id
+		left join um_std_area c on a.area_no = c.area_no
+		left join score_user_balance s on a.user_no = s.user_no
+		where 1=1
+		<if test="userid != null">  
+			and a.user_no = #{userid} 
+		</if>
+		<if test="user_mobile != null">  
+			and a.user_mobile = #{user_mobile} 
+		</if>
+		<if test="user_email != null">  
+			and a.user_email = #{user_email} 
+		</if>
+		<if test="user_job_no != null">  
+			and a.user_job_no = #{user_job_no} 
+		</if>		
+		<if test="user_nickname != null">  
+			and a.user_nickname = #{user_nickname} 
+		</if>
+	</select>
+</mapper>
