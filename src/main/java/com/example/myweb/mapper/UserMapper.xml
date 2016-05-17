@@ -28,4 +28,14 @@
 			and a.user_nickname = #{user_nickname} 
 		</if>
 	</select>
+	
+	<select id="getStudentList" parameterType="map" resultType="map">
+		select a.user_no, a.user_name, a.user_nickname, c.class_name,c.class_no, d.school_name, '学生' as role
+		from um_user_info a, um_user_student b, um_std_class c, um_std_school d
+		where a.user_nickname like CONCAT('%',#{username},'%' )
+			and a.user_no = b.user_no and b.class_no = c.class_no and b.school_no = d.school_no
+			<if test="school_no != null">and b.school_no=#{school_no}</if>
+            <if test="grade_no != null">and b.grade_no=#{grade_no}</if>
+			<if test="class_no != null">and b.class_no=#{class_no}</if>
+	</select>
 </mapper>

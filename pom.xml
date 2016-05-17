@@ -46,9 +46,16 @@
             <groupId>mysql</groupId>  
             <artifactId>mysql-connector-java</artifactId>  
         </dependency>
+        <!-- JDBC连接池组件 -->
         <dependency>
 		    <groupId>com.zaxxer</groupId>
 		    <artifactId>HikariCP</artifactId>
+		</dependency>
+		<!-- 分页插件 -->
+		<dependency>
+		    <groupId>com.github.pagehelper</groupId>
+		    <artifactId>pagehelper</artifactId>
+		    <version>4.1.0</version>
 		</dependency>
 	</dependencies>
 	

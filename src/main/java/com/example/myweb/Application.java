@@ -1,5 +1,6 @@
 package com.example.myweb;
 
+import org.apache.ibatis.logging.LogFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
