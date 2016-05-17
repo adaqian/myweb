@@ -37,10 +37,10 @@ public class UserController {
 		Map paraMap=new HashMap();
 		paraMap.put("user_job_no", username);
 		Map map=userMapper.getUserInfo(paraMap);
-		/*if(map==null){
+		if(map==null){
 			model.addAttribute("hasErrors", true);
 			return "login";
-		}*/
+		}
 			
 		log.info(map.toString());
 

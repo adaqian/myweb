@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="modal_chat" id="modal_chat" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    	<div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span></button>
+                <h4 class="modal-title">Direct Chat</h4>
+              </div>
+        <div class="modal-body">
+      <!-- chat -->
+		  <div class="box box-info box-solid direct-chat direct-chat-info">
+           
+            <div class="box-body">
+              <!-- Conversations are loaded here -->
+              <div class="direct-chat-messages" id="chat_content">
+                
+              </div>
+              <!--/.direct-chat-messages-->
+
+              <!-- Contacts are loaded here -->
+              <div class="direct-chat-contacts">
+                <ul class="contacts-list">
+                  <li>
+                    <a href="#">
+                      <img class="contacts-list-img" src="../img/user1-128x128.jpg" alt="User Image"/>
+
+                      <div class="contacts-list-info">
+                            <span class="contacts-list-name">
+                              Count Dracula
+                              <small class="contacts-list-date pull-right">2/28/2015</small>
+                            </span>
+                        <span class="contacts-list-msg">How have you been? I was...</span>
+                      </div>
+                      <!-- /.contacts-list-info -->
+                    </a>
+                  </li>
+                  <!-- End Contact Item -->
+                  <li>
+                    <a href="#">
+                      <img class="contacts-list-img" src="../img/user1-128x128.jpg" alt="User Image"/>
+
+                      <div class="contacts-list-info">
+                            <span class="contacts-list-name">
+                              Count Dracula
+                              <small class="contacts-list-date pull-right">2/28/2015</small>
+                            </span>
+                        <span class="contacts-list-msg">How have you been? I was...</span>
+                      </div>
+                      <!-- /.contacts-list-info -->
+                    </a>
+                  </li>
+                  <!-- End Contact Item -->
+                  <li>
+                    <a href="#">
+                      <img class="contacts-list-img" src="../img/user1-128x128.jpg" alt="User Image"/>
+
+                      <div class="contacts-list-info">
+                            <span class="contacts-list-name">
+                              Count Dracula
+                              <small class="contacts-list-date pull-right">2/28/2015</small>
+                            </span>
+                        <span class="contacts-list-msg">How have you been? I was...</span>
+                      </div>
+                      <!-- /.contacts-list-info -->
+                    </a>
+                  </li>
+                  <!-- End Contact Item -->
+                  <li>
+                    <a href="#">
+                      <img class="contacts-list-img" src="../img/user1-128x128.jpg" alt="User Image"/>
+
+                      <div class="contacts-list-info">
+                            <span class="contacts-list-name">
+                              Count Dracula
+                              <small class="contacts-list-date pull-right">2/28/2015</small>
+                            </span>
+                        <span class="contacts-list-msg">How have you been? I was...</span>
+                      </div>
+                      <!-- /.contacts-list-info -->
+                    </a>
+                  </li>
+                  <!-- End Contact Item -->
+                  <li>
+                    <a href="#">
+                      <img class="contacts-list-img" src="../img/user1-128x128.jpg" alt="User Image"/>
+
+                      <div class="contacts-list-info">
+                            <span class="contacts-list-name">
+                              Count Dracula
+                              <small class="contacts-list-date pull-right">2/28/2015</small>
+                            </span>
+                        <span class="contacts-list-msg">How have you been? I was...</span>
+                      </div>
+                      <!-- /.contacts-list-info -->
+                    </a>
+                  </li>
+                  <!-- End Contact Item -->
+                </ul>
+                <!-- /.contatcts-list -->
+              </div>
+              <!-- /.direct-chat-pane -->
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <div class="input-group">
+                  <input type="text" name="message" id="chat_input" placeholder="Type Message ..." class="form-control"/>
+                      <span class="input-group-btn">
+                        <button class="btn btn-info btn-flat" onclick="sendMessage()">Send</button>
+                      </span>
+                </div>
+            </div>
+            <!-- /.box-footer-->
+          </div>
+          <!--/.direct-chat -->
+          </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+</html>

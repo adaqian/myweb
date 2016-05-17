@@ -32,7 +32,8 @@ var stompClient = null;
     var message = {
             'name': encodeURIComponent(myname),
             'chatContent': encodeURIComponent(inputValue),
-            'coordinationId': username
+            'coordinationId': username,
+            'sendTime':(new Date()).pattern("yyyy-MM-dd hh:mm:ss")
           };
     stompClient.send("/app/userChat", {}, JSON.stringify(message)); 
     showChat(message,myname);
@@ -64,3 +65,9 @@ var stompClient = null;
 	  '<div class="direct-chat-text">'+text+'</div></div>';
 	  return html;
   }
+  function openChat(){
+	  //username="0100385";
+	  $('#modal_chat').modal({
+			backdrop:'static'
+		});
+	}
