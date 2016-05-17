@@ -18,6 +18,7 @@ import com.example.myweb.bean.User;
 import com.example.myweb.mapper.UserMapper;
 import com.github.pagehelper.PageHelper;
 
+@RequestMapping("/user")
 @Controller
 public class UserController {
 
@@ -26,7 +27,7 @@ public class UserController {
 	@Autowired
 	private UserMapper userMapper;
 	
-	@RequestMapping("/user/login")
+	@RequestMapping("/login")
 	public String userlogin(@RequestParam(value="username") String username,@RequestParam(value="password") String password,HttpSession session,Model model){
 		User user = new User();
 		user.setUsername(username);
@@ -36,21 +37,26 @@ public class UserController {
 		Map paraMap=new HashMap();
 		paraMap.put("user_job_no", username);
 		Map map=userMapper.getUserInfo(paraMap);
+		/*if(map==null){
+			model.addAttribute("hasErrors", true);
+			return "login";
+		}*/
+			
 		log.info(map.toString());
 
-		paraMap.put("username", "test");
+		/*paraMap.put("username", "test");
 		PageHelper.startPage(1, 10);
-		List<Map> list=userMapper.getStudentList(paraMap);
+		List<Map> list=userMapper.getStudentList(paraMap);*/
 		return "userhome";
 	}
 	
-	@RequestMapping("/user/logout")
+	@RequestMapping("/logout")
 	public String userloginout(HttpSession session){
 		session.removeAttribute("USER");
 		return "login";
 	}
 	
-	@RequestMapping("/user/home")
+	@RequestMapping("/home")
 	public String userHome(@RequestParam(value="username") String username,HttpSession session,Model model){
 		User user = (User)session.getAttribute("USER");
         if(user == null)
