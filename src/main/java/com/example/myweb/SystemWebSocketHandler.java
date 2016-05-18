@@ -10,5 +10,6 @@ public class SystemWebSocketHandler extends TextWebSocketHandler{
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		// TODO Auto-generated method stub
 		super.handleTextMessage(session, message);
+		System.out.println("123");
 	}
 }
