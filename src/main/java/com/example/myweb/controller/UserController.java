@@ -1,7 +1,6 @@
 package com.example.myweb.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -11,12 +10,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.myweb.bean.User;
 import com.example.myweb.mapper.UserMapper;
-import com.github.pagehelper.PageHelper;
 
 @RequestMapping("/user")
 @Controller
@@ -47,7 +46,7 @@ public class UserController {
 		/*paraMap.put("username", "test");
 		PageHelper.startPage(1, 10);
 		List<Map> list=userMapper.getStudentList(paraMap);*/
-		return "userhome";
+		return "redirect:/user/home";
 	}
 	
 	@RequestMapping("/logout")
@@ -57,7 +56,18 @@ public class UserController {
 	}
 	
 	@RequestMapping("/home")
-	public String userHome(@RequestParam(value="username") String username,HttpSession session,Model model){
+	public String myHome(HttpSession session,Model model){
+		User user = (User)session.getAttribute("USER");
+        if(user == null)
+        {
+            return "login";
+        }
+		model.addAttribute("username", user.getUsername());
+		return "userhome";
+	}
+	
+	@RequestMapping("/{username}")
+	public String userHome(@PathVariable("username") String username,HttpSession session,Model model){
 		User user = (User)session.getAttribute("USER");
         if(user == null)
         {

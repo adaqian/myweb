@@ -1,11 +1,11 @@
 package com.example.myweb.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import com.example.myweb.bean.UserChatCommand;
 import com.example.myweb.util.TimeUtil;
@@ -34,9 +34,12 @@ public class ChatController {
     }
     
     @MessageMapping("/chatWith/{name}")
-    public void chatWith(@PathVariable String name,UserChatCommand userChat){
-    	String dest = "/web/chat" + name;
-    	this.template.convertAndSend(dest, userChat);
+    @SendTo("/web/chat/{name}")
+    public UserChatCommand chatWith(@DestinationVariable("name") String name,UserChatCommand userChat){
+    	userChat.setSendTime(TimeUtil.getSysTime());
+    	/*String dest = "/web/chat/" + name;
+    	this.template.convertAndSend(dest, userChat);*/
+    	return userChat;
     }
     
     @MessageMapping("/publicNotic")

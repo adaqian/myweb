@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello WebSocket</title>
+    <script src="/lib/sockjs-0.3.4.js"></script>
+    <script src="/lib/stomp.js"></script>
+    <script src="/lib/jQuery-2.2.0.min.js"></script>
+    <script type="text/javascript">
+        var stompClient = null;
+        var coordinationId=1;
+        
+        $(function(){
+        	disconnect();
+        });
+        
+        function setConnected(connected) {
+            $("#connect").attr("disabled",connected);
+            $("#disconnect").attr("disabled",!connected);
+            if(connected){
+            	$("#conversationDiv").show();
+            }else{
+            	$("#conversationDiv").hide();
+            }
+            $("#response").html("");
+        }
+
+        function connect() {
+            var socket = new SockJS('/chat');
+            stompClient = Stomp.over(socket);
+            stompClient.connect({}, function(frame) {
+                setConnected(true);
+                console.log('Connected: ' + frame);
+                /* stompClient.subscribe('/topic/greetings', function(greeting){
+                    showGreeting(JSON.parse(greeting.body).content);
+                }); */
+                stompClient.subscribe('/web/notice', function(msg){
+                	showNotice(msg.body);
+                });
+                stompClient.subscribe('/web/chat/' + coordinationId, function(msg){
+                    showChat(JSON.parse(msg.body));
+                });
+            });
+        }
+
+        function disconnect() {
+            if (stompClient != null) {
+                stompClient.disconnect();
+            }
+            setConnected(false);
+            console.log("Disconnected");
+        }
+
+        /* function sendName() {
+            var name = document.getElementById('name').value;
+            stompClient.send("/app/hello", {}, JSON.stringify({ 'name': name }));
+        } */
+
+        function showGreeting(message) {
+            var response = document.getElementById('response');
+            var p = document.createElement('p');
+            p.style.wordWrap = 'break-word';
+            p.appendChild(document.createTextNode(message));
+            response.appendChild(p);
+        }
+        
+      	//发送聊天信息
+        function sendMessage() {
+          var inputValue = $('#chat_input').val();
+          var name = $('#name').val();
+          
+          stompClient.send("/app/chatWith/"+coordinationId, {}, JSON.stringify({
+            'name': encodeURIComponent(name),
+            'chatContent': encodeURIComponent(inputValue),
+            'coordinationId': coordinationId
+          })); 
+        }
+
+      	//显示聊天信息
+        function showChat(message) {
+            var text = decodeURIComponent(message.name) + ':' + decodeURIComponent(message.chatContent) + '\n';
+            var response = document.getElementById('chat_content');
+            var p = document.createElement('p');
+            p.style.wordWrap = 'break-word';
+            p.appendChild(document.createTextNode(text));
+            response.appendChild(p);
+        }
+      	
+      	function sendNotice(){
+      		var inputValue = $('#notice').val();
+            stompClient.send("/app/publicNotic", {}, inputValue);
+      	}
+      	
+		function showNotice(message){
+            $("#notice_content").text(message);
+      	}
+    </script>
+</head>
+<body>
+<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being enabled. Please enable
+    Javascript and reload this page!</h2></noscript>
+<div>
+    <div>
+        <button id="connect" onclick="connect();">Connect</button>
+        <button id="disconnect" disabled="disabled" onclick="disconnect();">Disconnect</button>
+    </div>
+    <div id="conversationDiv">
+        <label>send notice?</label><input type="text" id="notice" />
+        <button id="sendNotice" onclick="sendNotice();">Send</button>
+        <p id="notice_content"></p>
+        <label>What is your name?</label><input type="text" id="name" />
+        <!-- <button id="sendName" onclick="sendName();">Send</button> -->
+        <p id="response"></p>
+        <label>Send message?</label><input type="text" id="chat_input" />
+        <button id="sendMessage" onclick="sendMessage();">Send</button>
+        <p id="chat_content"></p>
+    </div>
+</div>
+</body>
+</html>

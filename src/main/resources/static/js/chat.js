@@ -1,8 +1,10 @@
 var stompClient = null;
-  var myname,username;
+  var myname;
+  var username=null;
+  var message_count=0;
   $(function () {
       myname=$("#myname").text();
-      username=$("#username").text();
+      //username=$("#username").text();
       connect();
   });
   
@@ -16,13 +18,12 @@ var stompClient = null;
               showGreeting(JSON.parse(greeting.body).content);
           }); */
           stompClient.subscribe('/web/chat' + myname, function(msg){
-              showChat(JSON.parse(msg.body),myname);
+        	  updateMessageList(JSON.parse(msg.body));
+        	  if(username!=null){
+        		  showChat(JSON.parse(msg.body),myname);
+        	  }
+        	  
           });
-          /*if(username!=myname){
-        	  stompClient.subscribe('/web/chat' + username, function(msg){
-                  showChat(JSON.parse(msg.body),myname);
-              });
-          }*/
           
       });
   }  
@@ -37,16 +38,15 @@ var stompClient = null;
           };
     stompClient.send("/app/userChat", {}, JSON.stringify(message)); 
     showChat(message,myname);
+    $('#chat_input').val("");
   }
   
   //显示聊天信息
   function showChat(message,myname) {
-      //var text = decodeURIComponent(message.name) + ':' + decodeURIComponent(message.chatContent) + '\n';
-	  
       var html=getChatMsg(decodeURIComponent(message.name),message.sendTime,decodeURIComponent(message.chatContent));
       //alert(html);
       var chatMsg = $(html).appendTo('#chat_content');
-      console.log(chatMsg);
+      //console.log(chatMsg);
       if(message.name==myname){
     	  chatMsg.addClass("right");
     	  chatMsg.find(".direct-chat-name").addClass("pull-right");
@@ -65,9 +65,23 @@ var stompClient = null;
 	  '<div class="direct-chat-text">'+text+'</div></div>';
 	  return html;
   }
-  function openChat(){
+  function openChat(name){
 	  //username="0100385";
+	  username=name;
 	  $('#modal_chat').modal({
 			backdrop:'static'
 		});
 	}
+  function updateMessageList(message){
+	  message_count++;
+	  $(".message_count").text(message_count).show();
+	  var html=getMessageHtml(decodeURIComponent(message.name),message.sendTime,decodeURIComponent(message.chatContent));
+	  $(html).prependTo('#message_list');
+  }
+  function getMessageHtml(name,time,text){
+	  var html='<li><a href="javascript:;" onclick="openChat(\''+name+'\')">'+
+	  '<div class="pull-left"><img src="../img/user2-160x160.jpg" class="img-circle" alt="User Image"/></div>'+
+	  '<h4>'+name+'<small><i class="fa fa-clock-o"></i> '+time+'</small></h4>'+
+	  '<p>'+text+'</p></a></li>';
+	  return html;
+  }
